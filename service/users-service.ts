@@ -1,22 +1,58 @@
 import usersRepo from "../repository/users-repo";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import emailService from "./email-service";
+
+// const register = async (user: any) => {
+//     // user => username, password
+//     // od password-a dobijemo hashedPassword
+//     user.hashed_password = crypto.createHash('md5').update(user.password).digest('hex');
+//     const result = await usersRepo.register(user);
+//     if (result.affectedRows > 0) {
+//         // user je kreiran, kreiran token za njega i posalji ga u odgovor
+//         const token = jwt.sign({
+//             email: user.email,
+//             isAdmin: false
+//         }, 'SECRET');
+//         await usersRepo.checkEmailVerification(user.email);
+//         try {
+//             await emailService.sendVerificationEmail(user.email, token);
+//             return { success: true, token };
+//         } catch (emailError) {
+//             console.error('Failed to send verification email:', emailError);
+//             return { success: false, result, message: 'Failed to send verification email' };
+//         }
+//     } else {
+//         // ovo znaci nije kreiran
+//         return { succes: false, result, msessage: 'Failed to send link' }
+//     }
+// }
 
 const register = async (user: any) => {
-    // user => username, password
-    // od password-a dobijemo hashedPassword
+    // Kreiranje hashed_password
     user.hashed_password = crypto.createHash('md5').update(user.password).digest('hex');
+
+    // Registrovanje korisnika
     const result = await usersRepo.register(user);
+
     if (result.affectedRows > 0) {
-        // user je kreiran, kreiran token za njega i posalji ga u odgovor
+        // Kreiranje tokena za korisnika
         const token = jwt.sign({
             email: user.email,
             isAdmin: false
         }, 'SECRET');
-        return { succes: true, token };
+        try {
+            await emailService.sendVerificationEmail(user.email, token)
+            return { success: true, token };
+        } catch (e) {
+            console.error('Failed to send email', e)
+            return { success: false, result }
+        } finally {
+            return { success: true, token };
+        }
     } else {
-        // ovo znaci nije kreiran
-        return { succes: false, result }
+        // Ako nije uspelo kreiranje korisnika
+        return { success: false, message: 'Failed to create user' }
     }
 }
 
@@ -25,18 +61,26 @@ const login = async (user: any) => {
     const result = await usersRepo.login(user);
 
     if (result && result.length > 0) {
-        // ovo znaci da je ulogovan
-        const token = jwt.sign({
-            email: user.email,
-            isAdmin: result[0].isAdmin == 1
-        }, 'SECRET');
-        console.log(result);
-        return { succes: true, token };
+        const userFromDb = result[0];
+
+        if (userFromDb.is_verified === 1) {
+            // ovo znaci da je ulogovan
+            const token = jwt.sign({
+                email: user.email,
+                isAdmin: result[0].isAdmin == 1
+            }, 'SECRET');
+            console.log(result);
+            return { succes: true, token, message: 'User is verified' };
+        } else {
+            console.log(result);
+            return { succes: false, result, message: 'User is not verified' }
+        }
     } else {
         console.log(result);
-        return { succes: false, result }
+        return { succes: false, result, message: 'User is not verified' }
     }
 }
+
 
 
 

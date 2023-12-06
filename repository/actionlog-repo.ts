@@ -27,8 +27,8 @@ const getLogByID = async (id: number) => {
 
 const insertNewLog = async (actionlog: any) => {
     try {
-        const result = await dbConnection.query(`insert into actionlog(vrsta, valuta, uputstvo, dobijeni_iznos, kripto_adresa, status_transakcije, created, updated) values(?,?,?,?,?,?, now(), now())`,
-            [actionlog.vrsta, actionlog.valuta, actionlog.uputstvo, actionlog.dobijeni_iznos, actionlog.kripto_adresa, actionlog.status_transakcije])
+        const result = await dbConnection.query(`insert into actionlog(vrsta, valuta, dobijeni_iznos, kripto_adresa, status_transakcije, created, updated) values(?,?,?,?,?,?, now(), now())`,
+            [actionlog.vrsta, actionlog.valuta,actionlog.dobijeni_iznos, actionlog.kripto_adresa, actionlog.status_transakcije])
         return result;
     }
     catch (e: any) {
@@ -40,8 +40,8 @@ const insertNewLog = async (actionlog: any) => {
 
 const updateLog = async (id: number, actionlog: any) => {
     try {
-        const result = await dbConnection.query(`update actionlog set vrsta = ?, valuta = ?, uputstvo = ?, dobijeni_iznos = ?, kripto_adresa = ?, status_transakcije = ? where id = ?`,
-            [actionlog.vrsta, actionlog.valuta, actionlog.uputstvo, actionlog.dobijeni_iznos, actionlog.kripto_adresa, actionlog.status_transakcije, id])
+        const result = await dbConnection.query(`update actionlog set vrsta = ?, valuta = ?, dobijeni_iznos = ?, kripto_adresa = ?, status_transakcije = ? where id = ?`,
+            [actionlog.vrsta, actionlog.valuta, actionlog.dobijeni_iznos, actionlog.kripto_adresa, actionlog.status_transakcije, id])
             return result;
     }
     catch (e: any) {
