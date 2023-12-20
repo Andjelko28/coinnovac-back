@@ -2,6 +2,7 @@ import usersRepo from "../repository/users-repo";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import emailService from "./email-service";
+import actionlogRepo from "../repository/actionlog-repo";
 
 // const register = async (user: any) => {
 //     // user => username, password
@@ -67,7 +68,7 @@ const login = async (user: any) => {
             // ovo znaci da je ulogovan
             const token = jwt.sign({
                 email: user.email,
-                isAdmin: result[0].isAdmin == 1
+                isAdmin: result[0].is_admin == 1 ? true : false,
             }, 'SECRET');
             console.log(result);
             return { succes: true, token, message: 'User is verified' };

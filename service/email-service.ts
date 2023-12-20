@@ -35,7 +35,7 @@ const sendVerificationEmail = async (email: string, token: string) => {
         service: 'gmail',
         auth: {
             user: 'andjelkofustic99@gmail.com',
-            pass: 'zmsb ebbf rmhh llhw'
+            pass: 'anbt vpil swzg nsbj'//'zmsb ebbf rmhh llhw'
         },
         tls: {
             rejectUnauthorized: false
@@ -44,7 +44,7 @@ const sendVerificationEmail = async (email: string, token: string) => {
 
     const mailConfigurations = {
         from: 'andjelkofustic99@gmail.com',
-        to: email,
+        to: 'andjelkofustic99@gmail.com',
         subject: 'Email verification',
         text: `Verify on this link  http://localhost:3000/verify/${token}`
     };
@@ -62,4 +62,4 @@ const sendVerificationEmail = async (email: string, token: string) => {
 
 
 
-export default { sendVerificationEmail}
+export default { sendVerificationEmail }

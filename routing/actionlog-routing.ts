@@ -7,8 +7,7 @@ router.route('/')
     .get(actionlogController.getActionLog)
     .post(actionlogController.insertNewLog)
 
-router.route('/:id')
+router.route('/:user_mail')
     .get(actionlogController.getLogByID)
-    .put(actionlogController.updateLog)
 
 export default router;

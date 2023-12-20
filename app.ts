@@ -27,6 +27,8 @@ import router from './routing/actionlog-routing';
 app.use('/table', router);
 import userRouter from './routing/users-routing';
 app.use(userRouter);
+import adminRouting from './routing/admin-routing'
+app.use(adminRouting)
 
 app.get('/verify/:token', async (req, res) => {
   const { token } = req.params;
@@ -59,6 +61,81 @@ app.get('/verify/:token', async (req, res) => {
 });
 
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.post('/contact', (req, res) => {
+  const email = req.body.email;
+  const description = req.body.description;
+
+  // Konfigurisi transporter za slanje emaila
+  const transporter = nodeMailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'andjelkofustic99@gmail.com',
+      pass: 'anbt vpil swzg nsbj'
+    }, tls: {
+      rejectUnauthorized: false
+    }
+  });
+
+  // Postavi opcije emaila
+  const mailOptions = {
+    from: email,
+    to: 'andjelkofustic99@gmail.com',
+    subject: 'Contact',
+    text: `${description}`
+  };
+
+  // Posalji email
+  transporter.sendMail(mailOptions, function (error: any, info: { response: string; }) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+
+    }
+  });
+});
+
+
+app.post('/buy', (req, res) => {
+  const email = req.body.email;
+  const result = req.body.result;
+  const numberToMultiply = req.body.numberToMultiply;
+  const cryptoa = req.body.cryptoa;
+
+  // Konfigurisi transporter za slanje emaila
+  const transporter = nodeMailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'andjelkofustic99@gmail.com',
+      pass: 'anbt vpil swzg nsbj'
+    }, tls: {
+      rejectUnauthorized: false
+    }
+  });
+
+  // Postavi opcije emaila
+  const mailOptions = {
+    from: email,
+    to: 'andjelkofustic99@gmail.com',
+    subject: 'Transaction inforamtion',
+    text: `This is information about your transaction: Bitcoin: ${numberToMultiply} - EUR: ${result}, cryptoadress: ${cryptoa}`
+  };
+
+  // Posalji email
+  transporter.sendMail(mailOptions, function (error: any, info: { response: string; }) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+
+    }
+  });
+});
+
+
 //    const transporter = nodeMailer.createTransport({
 //        service: 'Gmail',
 //        auth: {
@@ -85,41 +162,3 @@ app.get('/verify/:token', async (req, res) => {
 
 //        }
 //    })
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-app.post('/contact', (req, res) => {
-  const email = req.body.email;
-  const description = req.body.description;
-
-  // Konfigurisi transporter za slanje emaila
-  const transporter = nodeMailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: email,
-      // pass:'zmsb ebbf rmhh llhw'
-    },tls:{
-      rejectUnauthorized:false
-    }
-  });
-
-  // Postavi opcije emaila
-  const mailOptions = {
-    from: email,
-    to: 'andjelkofustic99@gmail.com',
-    subject: 'User contact',
-    text: `${description}`
-  };
-
-  // Posalji email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Email sent successfully');
-    }
-  });
-});

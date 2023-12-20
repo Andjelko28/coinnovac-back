@@ -5,8 +5,8 @@ const getActionLog = async () => {
     return data;
 }
 
-const getLogByID = async (id: number) => {
-    const data = await actionlogRepo.getLogByID(id);
+const getLogByID = async (user_mail:string) => {
+    const data = await actionlogRepo.getLogByID(user_mail);
     if (data && data.length > 0) {
         return data[0];
     }
@@ -23,5 +23,9 @@ const updateLog = async (id: number, actionlog: any) => {
     return data;
 }
 
+const deleteLog = async (id: number) => {
+    const data = await actionlogRepo.deleteLog(id);
+    return data;
+}
 
-export default { getActionLog, getLogByID, insertNewLog, updateLog }
+export default { getActionLog, getLogByID, insertNewLog, updateLog, deleteLog }

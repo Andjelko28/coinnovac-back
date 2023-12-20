@@ -2,10 +2,16 @@ import dbConnection from "../common/db-connecetion";
 
 const register = async (user: any) => {
     try {
-        const result = await dbConnection.query(`insert into users(email, hashed_password, is_admin, is_verified) values(?,?,0,0)`,
+        const result = await dbConnection.query(`insert into users(email,hashed_password, is_admin, is_verified) values(?,?,0,0)`,
             [user.email, user.hashed_password]);
-        return result;
+
+        const lastInsertedId = result.id;
+
+        const actionLogResult = await dbConnection.query(`insert into actionlog set user_mail = ?`, [lastInsertedId]);
+
+        return actionLogResult; 
     } catch (e: any) {
+        console.log(e);
         return { succes: false, msg: e.message }
     }
 }
