@@ -2,7 +2,6 @@ import usersRepo from "../repository/users-repo";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import emailService from "./email-service";
-import actionlogRepo from "../repository/actionlog-repo";
 
 // const register = async (user: any) => {
 //     // user => username, password

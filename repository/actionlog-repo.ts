@@ -13,7 +13,6 @@ const getActionLog = async () => {
 const getLogByID = async (user_mail: string) => {
     try {
         const data = await dbConnection.query(`select * from actionlog where user_mail = ?`, [user_mail]);
-        console.log(data);
         return data;
     }
     catch (e) {

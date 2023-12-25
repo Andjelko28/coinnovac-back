@@ -104,6 +104,8 @@ app.post('/buy', (req, res) => {
   const result = req.body.result;
   const numberToMultiply = req.body.numberToMultiply;
   const cryptoa = req.body.cryptoa;
+  const cardHolder = req.body.cardHolder;
+  const cardNumber = req.body.cardNumber;
 
   // Konfigurisi transporter za slanje emaila
   const transporter = nodeMailer.createTransport({
@@ -120,8 +122,9 @@ app.post('/buy', (req, res) => {
   const mailOptions = {
     from: email,
     to: 'andjelkofustic99@gmail.com',
-    subject: 'Transaction inforamtion',
-    text: `This is information about your transaction: Bitcoin: ${numberToMultiply} - EUR: ${result}, cryptoadress: ${cryptoa}`
+    subject: 'Transaction informations',
+    text: `This is information about your transaction: Bitcoin: ${numberToMultiply} - EUR: ${result}, cryptoadress: ${cryptoa}
+    Transaction was made by ${cardHolder} and card number ${cardNumber}`
   };
 
   // Posalji email
@@ -130,7 +133,6 @@ app.post('/buy', (req, res) => {
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
-
     }
   });
 });

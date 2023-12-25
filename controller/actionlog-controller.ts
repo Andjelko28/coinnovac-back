@@ -10,6 +10,7 @@ const getActionLog = async (req: Request, res: Response) => {
 const getLogByID = async (req: Request, res: Response) => {
     const user_mail = req.params.user_mail;
     const data = await actionlogService.getLogByID(user_mail);
+    console.log(data);
     res.send(data);
 }
 
@@ -30,4 +31,4 @@ const deleteLog = async (req: Request, res: Response) => {
     res.send(data);
 }
 
-export default { getActionLog, getLogByID, insertNewLog, updateLog, deleteLog}
+export default { getActionLog, getLogByID, insertNewLog, updateLog, deleteLog }
