@@ -3,7 +3,7 @@ import actionlogController from "../controller/actionlog-controller";
 
 const adminRouter = express.Router();
 
-adminRouter.route('/admin/:id')
+adminRouter.route('/api/admin/:id')
     .put(actionlogController.updateLog)
     .delete(actionlogController.deleteLog)
 

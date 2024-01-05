@@ -4,11 +4,11 @@ import actionlogController from '../controller/actionlog-controller';
 
 const router = express.Router();
 
-router.route('/')
+router.route('/api')
     .get(actionlogController.getActionLog)
     .post(actionlogController.insertNewLog)
 
-router.route('/user/:user_mail')
+router.route('/api/user/:user_mail')
     .get(actionlogController.getLogByID)
 
 export default router;
