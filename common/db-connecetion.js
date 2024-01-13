@@ -6,7 +6,7 @@ const dbConnection = new typeorm_1.DataSource({
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: '',
+    password: 'root',
     database: 'coinnovac'
 });
 exports.default = dbConnection;
