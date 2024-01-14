@@ -5,7 +5,7 @@ const dbConnection = new typeorm_1.DataSource({
     type: 'mysql',
     host: '45.93.138.91',
     port: 3306,
-    username: 'root',
+    username: 'u893115607_root',
     password: 'Coinnovac1!',
     database: 'coinnovac'
 });
