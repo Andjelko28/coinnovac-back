@@ -2,10 +2,10 @@ import { DataSource } from "typeorm";
 
 const dbConnection = new DataSource({
     type: 'mysql',
-    host: 'localhost',
+    host: '45.93.138.91',
     port: 3306,
     username: 'root',
-    password: 'andjelko',
+    password: 'Coinnovac1!',
     database: 'coinnovac'
 })
 
